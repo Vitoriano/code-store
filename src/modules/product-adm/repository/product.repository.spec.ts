@@ -51,4 +51,30 @@ describe("ProductRepository test", () => {
 
   });
 
+  it("Should find a product", async () => {
+
+    const productRepository = new ProductRepository();
+
+    const product = new Product(
+      {
+        id: new Id("1"),
+        name: "Product 1",
+        description: "Description",
+        purchasePrice: 100,
+        stock: 10,
+        createAt: new Date(),
+        updateAt: new Date()
+      }
+    );
+    
+    await productRepository.add(product);
+
+    const productFind = await productRepository.find("1");
+
+    expect(productFind.id.id).toEqual("1");
+    expect(productFind.name).toEqual("Product 1");
+    expect(productFind.description).toEqual("Description");
+
+  });
+
 });
