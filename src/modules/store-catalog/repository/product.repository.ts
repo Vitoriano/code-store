@@ -13,7 +13,7 @@ export default class ProductRepository implements ProductGateway {
         new Product({
           id: new Id(product.id),
           name: product.name,
-          description: product.name,
+          description: product.description,
           salesPrice: product.salesPrice
         })
     );
@@ -33,7 +33,7 @@ export default class ProductRepository implements ProductGateway {
     return new Product({
       id: new Id(product.id),
       name: product.name,
-      description: product.name,
+      description: product.description,
       salesPrice: product.salesPrice
     })
   }
