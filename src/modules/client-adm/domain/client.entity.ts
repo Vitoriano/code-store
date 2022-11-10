@@ -7,6 +7,8 @@ type ClientProps = {
   name: string;
   email: string;
   address: string;
+  createdAt?: string;
+  updatedAt?:string;
 }
 
 export default class Client extends BaseEntity implements AggregateRoot {
