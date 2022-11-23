@@ -14,6 +14,18 @@ const MockRepository = () => {
   };
 }
 
+const transaction2 = new Transaction({
+  id: new Id("1"),
+  amount: 50,
+  orderId: '1'
+})
+
+const MockRepositoryDeclined = () => {
+  return {
+    save: jest.fn().mockReturnValue(Promise.resolve(transaction2)),
+  };
+}
+
 describe("Process Payment usecase unit test", () => {
 
   it("Shoud aprove a transaction", async () => {
@@ -34,6 +46,25 @@ describe("Process Payment usecase unit test", () => {
    expect(result.amount).toBe(100);
 
   });
+
+  it("Shoud declined a transaction", async () => {
+
+    const paymentRepository = MockRepositoryDeclined();
+    const usecase = new ProcessPaymentUseCase(paymentRepository);
+ 
+    const input = {
+       orderId: "1",
+       amount: 50
+    }
+ 
+    const result = await usecase.execute(input);
+ 
+    expect(result.transactionId).toBe(transaction.id.id);
+    expect(paymentRepository.save).toHaveBeenCalled();
+    expect(result.status).toBe("declined");
+    expect(result.amount).toBe(50);
+ 
+   });
 
 
 });
